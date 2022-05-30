@@ -9,6 +9,6 @@ class Subcategory extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'brand_name','brand_slug','brand_logo', 
+        'brand_name','brand_slug','brand_logo',
     ];
 }

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Warehouse extends Model
 {
     use HasFactory;
-      protected $guraded = [];
+      protected $guarded =[];
 }

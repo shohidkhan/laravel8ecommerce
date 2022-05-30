@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Pickuppoint extends Model
 {
     use HasFactory;
-      protected $guraded = [];
+      protected $fillable =['warehouse_name','warehouse_address','warehouse_phone'];
 }

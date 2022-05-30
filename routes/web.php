@@ -14,9 +14,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.index');
 });
 
-Auth::routes();
 
+Auth::routes();
+// Route::get('/login',function(){
+//     return redirect()->to('/');
+// })->name('login');
+
+// Route::get('/register',function(){
+//   return redirect()->to('/');
+// })->name('register');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('customer.logout');
+
+Route::group(['namespace'=>'App\Http\Controllers\Frontend',],function(){
+  Route::get('/','IndexController@index');
+  Route::get('/product_details/{slug}','IndexController@productDetails')->name('product.details');
+  Route::get('/product-quick-view/{id}','IndexController@productQuickView');
+  Route::post('review-store','ReviewController@store')->name('review.store');
+  Route::get('add-wishlist/{id}','ReviewController@addwishlist')->name('add.wishlist');
+});

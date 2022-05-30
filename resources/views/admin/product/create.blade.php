@@ -3,7 +3,7 @@
 
 <style type="text/css">
   .bootstrap-tagsinput .tag {
-    background: #428bca;;
+    background: #428bca;
     border: 1px solid white;
     padding: 1 6px;
     padding-left: 2px;
@@ -267,7 +267,7 @@
                        @enderror
                      </div>
 
-                     <!-- <div class="card p-4">
+                     <div class="card p-4">
                         <h6>Slider Product</h6>
                        <input type="checkbox" name="product_slider" value="1"  data-bootstrap-switch data-off-color="danger" data-on-color="success">
                      </div>
@@ -275,7 +275,7 @@
                      <div class="card p-4">
                         <h6>Trendy Product</h6>
                        <input type="checkbox" name="trendy" value="1"  data-bootstrap-switch data-off-color="danger" data-on-color="success">
-                     </div> -->
+                     </div>
 
                      <div class="card p-4">
                         <h6>Status</h6>

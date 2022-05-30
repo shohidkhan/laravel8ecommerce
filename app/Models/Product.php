@@ -14,36 +14,36 @@ use App\Models\Warehouse;
 class Product extends Model
 {
     use HasFactory;
-      protected $guraded = [];
 
+      protected $guarded =[];
 
-      public function connect_to_category()
+       function connect_to_category()
       {
         return $this->belongsTo(Category::class,'category_id');
       }
 
-      public function connect_to_subcategory()
+       function connect_to_subcategory()
       {
         return $this->belongsTo(Subcategory::class,'subcategory_id');
       }
 
-      public function connect_to_childcategory()
+       function connect_to_childcategory()
       {
         return $this->belongsTo(Childcategory::class,'childcategory_id');
       }
 
-      public function connect_to_Pickuppoint()
+       function connect_to_Pickuppoint()
       {
         return $this->belongsTo(Pickuppoint::class,'pickup_point_id');
       }
 
-      public function connect_to_brand()
+       function connect_to_brand()
       {
         return $this->belongsTo(Brand::class,'brand_id');
       }
 
-      public function connect_to_warehouse()
+       function connect_to_warehouse()
       {
-        return $this->belongsTo(Warehouse::class,'warehouse_id');
+        return $this->belongsTo('App\Models\Warehouse','warehouse_id');
       }
 }

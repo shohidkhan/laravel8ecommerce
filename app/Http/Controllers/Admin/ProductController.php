@@ -92,7 +92,7 @@ class ProductController extends Controller
              })
              ->addColumn('action', function($row){
                $actionbtn='
-               <a href=""   class="btn btn-info btn-sm edit" id="edit">
+               <a href="'.Route('product.edit',[$row->id]).'"   class="btn btn-info btn-sm edit">
                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                </a>
                <a href=""   class="btn btn-primary btn-sm edit" id="edit">
@@ -165,9 +165,9 @@ class ProductController extends Controller
        $data['video']=$request->video;
        $data['featured']=$request->featured;
        $data['today_deal']=$request->today_deal;
-       //$data['product_slider']=$request->product_slider;
+       $data['product_slider']=$request->product_slider;
        $data['status']=$request->status;
-      // $data['trendy']=$request->trendy;
+      $data['trendy']=$request->trendy;
        $data['admin_id']=Auth::id();
        $data['date']=date('d-m-Y');
        $data['month']=date('F');
@@ -245,5 +245,15 @@ class ProductController extends Controller
     $notification=array('messege'=>'Product Deleted!','alert-type'=>'success');
 
     return back()->with($notification);
+  }
+  // product edit
+  public function edit($id)
+  {
+    $data=DB::table('products')->where('id',$id)->first();
+  $category=DB::table('categories')->get();
+  $brand=DB::table('brands')->get();
+  $pickuppoint=DB::table('pickuppoints')->get();
+  $warehouse =DB::table('warehouses')->get();
+    return view('admin.product.edit',compact('category','data','brand','pickuppoint','warehouse'));
   }
 }

@@ -71,6 +71,17 @@
                             </div>
                         </div>
                     </form>
+                    <br>
+                    <br>
+                  <div class="text-center">
+                      --------------or------------
+                  </div>
+                    <br>
+                    <br>
+                    <div class="form-group text-center">
+                      <a href="" class="btn btn-danger btn-sm  text-white">Login WIth Google</a>
+                     </div>
+
                 </div>
             </div>
         </div>

@@ -43,6 +43,14 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'is_admin'
     Route::get('/edit/{id}','BrandController@edit')->name('brand.edit');
     Route::post('/update','BrandController@update')->name('brand.update');
   });
+  //Campaign route
+  Route::group(['prefix'=>'campaign'],function(){
+    Route::get('/','CampaignContoller@index')->name('campaign.index');
+    // Route::post('/store',"BrandController@store")->name('brand.store');
+    // Route::get('/delete/{id}','BrandController@destory')->name('brand.delete');
+    // Route::get('/edit/{id}','BrandController@edit')->name('brand.edit');
+    // Route::post('/update','BrandController@update')->name('brand.update');
+  });
   //coupn route
   Route::group(['prefix'=>'coupon'],function(){
     Route::get('/','CouponController@index')->name('coupon.index');
@@ -67,7 +75,7 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'is_admin'
     Route::get('/edit/{id}','PickuppointController@edit')->name('pickuppoint.edit');
     Route::post('/update/{id}','PickuppointController@update')->name('pickuppoint.update');
   });
-  //pickup point route
+  //product route
   Route::group(['prefix'=>'product'],function(){
     Route::get('/','ProductController@index')->name('product.index');
     Route::get('/create','ProductController@create')->name('product.create');
@@ -79,7 +87,7 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'is_admin'
     Route::get('/deactive_status/{id}',"ProductController@deactive_status")->name('product.deactive_status');
     Route::get('/active_status/{id}',"ProductController@active_status")->name('product.active_status');
     Route::get('/delete/{id}','ProductController@destory')->name('product.delete');
-    // Route::get('/edit/{id}','PickuppointController@edit')->name('pickuppoint.edit');
+   Route::get('/edit/{id}','ProductController@edit')->name('product.edit');
     // Route::post('/update/{id}','PickuppointController@update')->name('pickuppoint.update');
   });
   //Settings Route
