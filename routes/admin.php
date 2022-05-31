@@ -46,10 +46,10 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'is_admin'
   //Campaign route
   Route::group(['prefix'=>'campaign'],function(){
     Route::get('/','CampaignContoller@index')->name('campaign.index');
-    // Route::post('/store',"BrandController@store")->name('brand.store');
-    // Route::get('/delete/{id}','BrandController@destory')->name('brand.delete');
-    // Route::get('/edit/{id}','BrandController@edit')->name('brand.edit');
-    // Route::post('/update','BrandController@update')->name('brand.update');
+    Route::post('/store',"CampaignContoller@store")->name('campaign.store');
+     Route::get('/delete/{id}','CampaignContoller@destory')->name('campaign.delete');
+     Route::get('/edit/{id}','CampaignContoller@edit')->name('campaign.edit');
+     Route::post('/update','CampaignContoller@update')->name('campaign.update');
   });
   //coupn route
   Route::group(['prefix'=>'coupon'],function(){

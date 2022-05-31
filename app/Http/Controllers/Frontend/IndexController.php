@@ -27,7 +27,7 @@ class IndexController extends Controller
       $single_product=Product::where('slug',$slug)->first();
       Product::where('slug',$slug)->increment('product_views');
       $related_products=Product::where('subcategory_id',$single_product->subcategory_id)->orderBy('id','desc')->take(10)->get();
-      $reviews=Review::where('product_id',$single_product->id)->get();
+      $reviews=Review::where('product_id',$single_product->id)->orderBy('id','desc')->get();
     return view('frontend.product_details',compact('single_product','related_products','reviews'));
     }
     public function productQuickView($id)

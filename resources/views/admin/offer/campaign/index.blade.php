@@ -36,6 +36,9 @@
                    <th>Title</th>
                    <th>Start date</th>
                    <th>End date</th>
+                   <th>
+                     Status
+                   </th>
                    <th>Image</th>
                    <th>Discount</th>
                    <th>Month</th>
@@ -56,30 +59,58 @@
     </section>
 
     <!-- Modal -->
-<div class="modal fade" id="childcategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade model-lg" id="childcategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Brand</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Campaign</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-      <form class="" action="" method="post" enctype="multipart/form-data">
+      <form class="" action="{{route('campaign.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
-          <label for="">Brand  Name</label>
-          <input type="text" name="brand_name" value="{{old('brand_name')}}" class="form-control">
+          <label for="">Campaign Title</label>
+          <input type="text" name="title" value="{{old('title')}}" class="form-control" required>
+        </div>
+        <div class="">
+          <div class="row">
+            <div class="col-lg-6 ">
+              <div class="form-group">
+                <label for="">Campaign Start date</label>
+                <input class="form-control" type="date" name="start_date" value="{{old('title')}}" required>
+              </div>
+            </div>
+            <div class="col-lg-6 form-group">
+            <div class="form-group">
+              <label for="">Campaign End date</label>
+              <input class="form-control" type="date" name="end_date" value="{{old('end_date')}}" required>
+            </div>
+            </div>
+          </div>
         </div>
         <div class="form-group">
-          <label for="">Brand  Logo</label>
-          <input type="file" class="dropify" data-height="140" id="input-file-now" name="brand_logo" required="">
+          <label for="">Campaign status</label>
+          <select class="form-control" name="status">
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">Campaign Banner</label>
+          <input type="file" class="dropify" data-height="140" id="input-file-now" name="image" required="">
 
 
-          @error('brand_logo')
+          @error('image')
           {{$message}}
           @enderror
+        </div>
+
+        <div class="form-group">
+          <label for="">Campaign Discount</label>
+          <input type="text" name="discount" value="{{old('discount')}}" class="form-control" required>
         </div>
 
       </div>
@@ -108,14 +139,14 @@ $(function childcategory(){
 				{data:'title',name:'title'},
 				{data:'start_date'  ,name:'start_date'},
         {data:'end_date',name:'end_date'},
+        {data:'status',name:'status'},
 				{data:'image',name:'image', render:function(data,type,full,meta){
-          return "<img src=\"{{asset('files/brand/')}}/"+data+"\" height=\"40\"/>"
+          return "<img src=\"{{asset('files/campaign/')}}/"+data+"\" height=\"40\"/>"
         }},
         {data:'discount',name:'discount'},
         {data:'month',name:'month'},
         {data:'year',name:'year'},
 				{data:'action',name:'action',orderable:true, searchable:true},
-
 			]
 		});
 	});

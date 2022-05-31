@@ -255,10 +255,10 @@
 
             <!-- Product Panel -->
             <div class="product_panel panel active">
-              <div class="featured_slider slider">
+              <div class="featured_slider  ">
                 @foreach($featured_products as $row)
                 <!-- Slider Item -->
-                <div class="featured_slider_item">
+                <div class="featured_slider_item" >
                   <div class="border_active"></div>
                   <div class="product_item d-flex flex-column align-items-center justify-content-center text-center">
                     <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset('files/product/')}}/{{$row->thumbnail}}" alt=""></div>
@@ -320,7 +320,7 @@
                       @endif
                       <div class="product_name"><div><a href="{{route('product.details',$row->slug)}}">{{$row->name}}</a></div></div>
                       <div class="product_extras">
-                        
+
 
                         <button class="product_cart_button">Add to Cart</button>
                       </div>
