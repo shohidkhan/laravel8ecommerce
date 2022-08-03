@@ -129,8 +129,6 @@ class ProductController extends Controller
        'discount_price' => 'required',
        'warehouse_id' => 'required',
        'stock_quantity' => 'required',
-       'color' => 'required',
-       'size' => 'required',
        'video' => 'required',
        'description' => 'required',
        'featured' => 'required',

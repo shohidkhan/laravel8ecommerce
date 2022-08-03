@@ -35,6 +35,7 @@
                    <th>SL</th>
                    <th>Category Name</th>
                    <th>Category Slug</th>
+                   <th>Home page</th>
                    <th>Action</th>
                  </tr>
                  </thead>
@@ -45,6 +46,17 @@
                    <td>{{$key+1}}</td>
                    <td>{{$category->category_name}}</td>
                    <td>{{$category->category_slug}}</td>
+                   <td>
+                     @if($category->home_page==1)
+                     <div class="badge badge-success">
+                       Home Page
+                     </div>
+                     @else
+                     <div class="badge badge-danger">
+                       Not home Page
+                     </div>
+                     @endif
+                   </td>
                    <td>
                      <a href="{{route('category.edit',$category->id)}}"   class="btn btn-info btn-sm edit" id="edit">
                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -82,6 +94,16 @@
           <label for="">Catrgory Name</label>
           <input type="text" class="form-control"  name="category_name" required>
           @error('category_name')
+          {{$message}}
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="">Show on Home Page</label>
+          <select class="form-control" name="home_page">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+          @error('home_page')
           {{$message}}
           @enderror
         </div>

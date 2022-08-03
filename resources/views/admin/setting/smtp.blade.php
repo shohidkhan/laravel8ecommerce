@@ -18,24 +18,24 @@
                 @csrf
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mail Mailer</label>
-                    <input type="text" name="mailer" value="{{$data->mailer}}" class="form-control" id="exampleInputEmail1" placeholder="Mail Mailer" >
+                    <input type="text" name="mailer" value="{{env('MAIL_MAILER')}}" class="form-control" id="exampleInputEmail1" placeholder="Mail Mailer" >
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mail Host</label>
-                    <input type="text" name="host" value="{{$data->host}}" class="form-control" id="exampleInputEmail1" placeholder="Mail Host" >
+                    <input type="text" name="host" value="{{env('MAIL_HOST')}}" class="form-control" id="exampleInputEmail1" placeholder="Mail Host" >
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mail Port</label>
-                    <input type="text" name="port" value="{{$data->port}}" class="form-control" id="exampleInputEmail1" placeholder="Mail Port" >
+                    <input type="text" name="port" value="{{env('MAIL_PORT')}}" class="form-control" id="exampleInputEmail1" placeholder="Mail Port" >
                     <small>Example:2525</small>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mail Username</label>
-                    <input type="text" name="username" value="{{$data->username}}" class="form-control" id="exampleInputEmail1" placeholder="Mail Username" >
+                    <input type="text" name="username" value="{{env('MAIL_USERNAME')}}" class="form-control" id="exampleInputEmail1" placeholder="Mail Username" >
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mail  password</label>
-                    <input type="text" name="password" value="{{$data->password}}" class="form-control" id="exampleInputEmail1" placeholder="Mail password" >
+                    <input type="text" name="password" value="{{env('MAIL_PASSWORD')}}" class="form-control" id="exampleInputEmail1" placeholder="Mail password" >
                   </div>
 
                   <button type="submit" class="btn btn-primary">Update</button>

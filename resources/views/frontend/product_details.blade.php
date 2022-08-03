@@ -35,11 +35,13 @@ $count_rating=App\Models\Review::where('product_id',$single_product->id)->count(
 			<!-- Images -->
 			<div class="col-lg-1 order-lg-1 order-2" >
 				<ul class="image_list">
+          @isset($images)
           @foreach($images as $image)
 					<li data-image="{{ asset('files/product/')}}/{{$image}}">
 						<img src="{{ asset('files/product/')}}/{{$image}}" alt="">
 					</li>
           @endforeach
+          @endisset
 				</ul>
 			</div>
 
@@ -55,7 +57,12 @@ $count_rating=App\Models\Review::where('product_id',$single_product->id)->count(
 					<div class="product_name" style="font-size: 20px;">{{$single_product->name}}</div>
 
 					<div class="product_category"><b> Brand: {{$single_product->connect_to_brand->brand_name}} </b></div>
-					<div class="product_category"><b> Stock: {{$single_product->stock_quantity}} </b></div>
+					<h3 class="product_category"><b> Stock: {{$single_product->stock_quantity}} </b></h3>
+          @if($single_product->stock_quantity < 1)
+          <h3 class="text-danger">Out Of Stock</h3>
+          @else
+          <h3 class="text-success"> Stock Available</h3>
+          @endif
           @isset($single_product->unit)
 					<div class="product_category"><b> Unit: {{$single_product->unit}}  </b></div>
           @endisset
@@ -114,12 +121,16 @@ $count_rating=App\Models\Review::where('product_id',$single_product->id)->count(
               @endif
 					</div>
 
+<form  action="{{route('add.to.cart')}}" method="post" >
+  @csrf
+          <input type="hidden" name="id" value="{{$single_product->id}}">
+          @if($single_product->discount_price==NULL)
+          <input type="hidden" name="price" value="{{$single_product->selling_price}}">
+          @else
+          <input type="hidden" name="price" value="{{$single_product->discount_price}}">
+          @endif
 
 					<div class="order_info ">
-
-
-
-
 							<div class="form-group">
 									<div class="row">
                     @isset($single_product->size)
@@ -150,13 +161,13 @@ $count_rating=App\Models\Review::where('product_id',$single_product->id)->count(
 							<div class="clearfix" style="z-index: 1000;">
 
 								<!-- Product Quantity -->
-								<div class="product_quantity clearfix ml-2">
+								<div class="p">
 									<span>Quantity: </span>
-									<input id="quantity_input" type="text" name="qty" pattern="[1-9]*" min="1" value="1">
-									<div class="quantity_buttons">
+									<input id="" type="number" name="qty" pattern="[1-9]*" min="1" value="1">
+									<!-- <div class="quantity_buttons">
 										<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
 										<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
-									</div>
+									</div> -->
 								</div>
 							</div>
 
@@ -165,9 +176,12 @@ $count_rating=App\Models\Review::where('product_id',$single_product->id)->count(
 								  <div class="input-group-prepend">
 
 
-
-								    <button class="btn btn-outline-info" type="submit"> <span class="loading d-none">....</span> Add to cart</button>
-
+                    @if($single_product->stock_quantity < 1)
+                    <h3 class="text-danger">Out Of Stock</h3>
+                    @else
+								    <button class="btn btn-outline-info" type="submit">  Add to cart</button>
+                    @endif
+</form>
 
 								    <a href="{{route('add.wishlist',$single_product->id)}}" class="btn btn-outline-primary" type="button">Add to wishlist</a>
 								  </div>
@@ -255,7 +269,12 @@ $count_rating=App\Models\Review::where('product_id',$single_product->id)->count(
 
               @endif
               @endif
-{{$sum_rating/$count_rating}}
+              @if($sum_rating!=NULL)
+              {{$sum_rating/$count_rating}}
+              @else
+              No review yet
+              @endif
+
               <br>
 
 						</div>
@@ -365,31 +384,31 @@ $count_rating=App\Models\Review::where('product_id',$single_product->id)->count(
 											<span class="fa fa-star checked"></span>
 											<span class="fa fa-star checked"></span>
 											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star-o"></span>
+											<span class="fa fa-star"></span>
 										</div>
                     @elseif($row->rating==3)
                     <div>
 											<span class="fa fa-star checked"></span>
 											<span class="fa fa-star checked"></span>
 											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star-o"></span>
-											<span class="fa fa-star-o"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
 										</div>
                     @elseif($row->rating==2)
                     <div>
 											<span class="fa fa-star checked"></span>
 											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star-o"></span>
-											<span class="fa fa-star-o"></span>
-											<span class="fa fa-star-o"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
 										</div>
                     @else
                     <div>
 											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star-o"></span>
-											<span class="fa fa-star-o"></span>
-											<span class="fa fa-star-o"></span>
-											<span class="fa fa-star-o"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
 										</div>
                     @endif
 						 	 </div>
@@ -459,4 +478,6 @@ $count_rating=App\Models\Review::where('product_id',$single_product->id)->count(
 </div>
 
 <script src="{{asset('frontend')}}/js/product_custom.js"></script>
+
+
 @endsection

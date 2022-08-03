@@ -23,9 +23,11 @@ class CategoryController extends Controller
     public function store(Request $request){
       $request->validate([
         'category_name'=>'required|unique:categories|max:255',
+        'home_page'=>'required',
       ]);
       $data=array();
       $data['category_name']=$request->category_name;
+      $data['home_page']=$request->home_page;
       $data['category_slug']=Str::slug($request->category_name, '-');
       DB::table('categories')->insert($data);
       $notification=array('messege'=>'Category Added Successfully!','alert-type'=>'success');
@@ -39,8 +41,10 @@ class CategoryController extends Controller
         return view('admin.category.category.edit',compact('data'));
     }
     public function update(Request $request){
+
       Category::find($request->id)->update([
         'category_name'=>$request->category_name,
+        'home_page'=>$request->home_page,
         'category_slug'=>Str::slug($request->category_name, '-'),
       ]);
       $notification=array('messege'=>'Category Updated Successfully!','alert-type'=>'success');

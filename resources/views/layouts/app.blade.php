@@ -146,7 +146,7 @@ $wishlists=DB::table('wishlists')->where('user_id',Auth::id())->count();
 							<div class="wishlist d-flex flex-row align-items-center justify-content-end">
 								<div class="wishlist_icon"><img src="images/heart.png" alt=""></div>
 								<div class="wishlist_content">
-									<div class="wishlist_text"><a href="#">Wishlist</a></div>
+									<div class="wishlist_text"><a href="{{route('wishlist')}}">Wishlist</a></div>
 									<div class="wishlist_count">{{$wishlists}}</div>
 								</div>
 							</div>
@@ -155,12 +155,12 @@ $wishlists=DB::table('wishlists')->where('user_id',Auth::id())->count();
 							<div class="cart">
 								<div class="cart_container d-flex flex-row align-items-center justify-content-end">
 									<div class="cart_icon">
-										<img src="images/cart.png" alt="">
-										<div class="cart_count"><span>10</span></div>
+										<img src="{{asset('frontend')}}/images/cart.png" alt="">
+										<div class="cart_count"><span class="cart_qty">{{Cart::count()}}</span></div>
 									</div>
 									<div class="cart_content">
-										<div class="cart_text"><a href="#">Cart</a></div>
-										<div class="cart_price">$85</div>
+										<div class="cart_text"><a href="{{route('cart')}}">Cart</a></div>
+										<div class="cart_price">{{$setting->currency}} <span class="cart_total">{{Cart::total()}}</span> </div>
 									</div>
 								</div>
 							</div>
@@ -190,8 +190,9 @@ $wishlists=DB::table('wishlists')->where('user_id',Auth::id())->count();
             <div class="newsletter_text"><p>...and receive %20 coupon for first shopping.</p></div>
           </div>
           <div class="newsletter_content clearfix">
-            <form action="#" class="newsletter_form">
-              <input type="email" class="newsletter_input" required="required" placeholder="Enter your email address">
+            <form action="{{route('newsletter.store')}}" method="post" class="newsletter_form">
+@csrf
+              <input type="email" class="newsletter_input" name="email" required="required" placeholder="Enter your email address">
               <button class="newsletter_button">Subscribe</button>
             </form>
             <div class="newsletter_unsubscribe_link"><a href="#">unsubscribe</a></div>
@@ -208,7 +209,7 @@ $wishlists=DB::table('wishlists')->where('user_id',Auth::id())->count();
 				<div class="col-lg-3 footer_col">
 					<div class="footer_column footer_contact">
 						<div class="logo_container">
-							<div class="logo"><a href="#">OneTech</a></div>
+							<div class="logo"><a href="#"> <img src="{{asset('files/setting/')}}/{{$setting->logo}}" alt=""> </a></div>
 						</div>
 						<div class="footer_title">Got Question? Call Us 24/7</div>
 						<div class="footer_phone">+38 068 005 3570</div>
@@ -218,41 +219,39 @@ $wishlists=DB::table('wishlists')->where('user_id',Auth::id())->count();
 						</div>
 						<div class="footer_social">
 							<ul>
-								<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-								<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fab fa-youtube"></i></a></li>
-								<li><a href="#"><i class="fab fa-google"></i></a></li>
-								<li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
+								<li><a href="{{$setting->facebook}}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+								<li><a href="{{$setting->twitter}}" target="_blank"><i class="fab fa-twitter"></i></a></li>
+								<li><a href="{{$setting->youtube}}" target="_blank"><i class="fab fa-youtube"></i></a></li>
+
 							</ul>
 						</div>
 					</div>
 				</div>
 
+        @php
+        $pages_one= DB::table('pages')->where('page_position',1)->get();
+        $pages_two= DB::table('pages')->where('page_position',2)->get();
+        @endphp
 				<div class="col-lg-2 offset-lg-2">
 					<div class="footer_column">
-						<div class="footer_title">Find it Fast</div>
+						<div class="footer_title">Important Links</div>
 						<ul class="footer_list">
-							<li><a href="#">Computers & Laptops</a></li>
-							<li><a href="#">Cameras & Photos</a></li>
-							<li><a href="#">Hardware</a></li>
-							<li><a href="#">Smartphones & Tablets</a></li>
-							<li><a href="#">TV & Audio</a></li>
-						</ul>
-						<div class="footer_subtitle">Gadgets</div>
-						<ul class="footer_list">
-							<li><a href="#">Car Electronics</a></li>
-						</ul>
+              @foreach( $pages_one as $row)
+							<li><a href="{{route('page.details',$row->page_slug)}}">{{$row->page_name}}</a></li>
+							@endforeach
+
 					</div>
 				</div>
-
+@php
+$category = DB::table('categories')->get();
+@endphp
 				<div class="col-lg-2">
+          <div class="footer_title">Categories</div>
 					<div class="footer_column">
 						<ul class="footer_list footer_list_2">
-							<li><a href="#">Video Games & Consoles</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li><a href="#">Cameras & Photos</a></li>
-							<li><a href="#">Hardware</a></li>
-							<li><a href="#">Computers & Laptops</a></li>
+              @foreach( $category as $row)
+							<li><a href="{{route('categorywise.product',$row->id)}}">{{$row->category_name}}</a></li>
+							@endforeach
 						</ul>
 					</div>
 				</div>
@@ -262,12 +261,12 @@ $wishlists=DB::table('wishlists')->where('user_id',Auth::id())->count();
 						<div class="footer_title">Customer Care</div>
 						<ul class="footer_list">
 							<li><a href="#">My Account</a></li>
-							<li><a href="#">Order Tracking</a></li>
+							<li><a href="{{route('order.tracking')}}">Order Tracking</a></li>
 							<li><a href="#">Wish List</a></li>
-							<li><a href="#">Customer Services</a></li>
-							<li><a href="#">Returns / Exchange</a></li>
-							<li><a href="#">FAQs</a></li>
-							<li><a href="#">Product Support</a></li>
+							<li><a href="#">Our Blog</a></li>
+							<li><a href="#">Contact Us</a></li>
+							<li><a href="#">Become a vendor</a></li>
+
 						</ul>
 					</div>
 				</div>
@@ -317,6 +316,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script type="text/javascript" src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{asset('frontend')}}/js/custom.js"></script>
 <script src="{{asset('frontend')}}/js/product_custom.js"></script>
+
 <script>
     @if(Session::has('messege'))
       var type="{{Session::get('alert-type','info')}}"

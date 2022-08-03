@@ -37,6 +37,8 @@
                    <th>Brand Name</th>
                    <th>Brand Slug</th>
                    <th>Brand logo</th>
+                   <th>
+                     Home Page</th>
                    <th>Action</th>
                  </tr>
                  </thead>
@@ -78,8 +80,15 @@
           {{$message}}
           @enderror
         </div>
+        <div class="form-group">
+          <select class="form-control" name="front_page">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+        </div>
 
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -108,6 +117,7 @@ $(function childcategory(){
 				{data:'brand_logo',name:'brand_logo', render:function(data,type,full,meta){
           return "<img src=\"{{asset('files/brand/')}}/"+data+"\" height=\"40\"/>"
         }},
+        {data:'front_page',name:'front_page'},
 				{data:'action',name:'action',orderable:true, searchable:true},
 
 			]

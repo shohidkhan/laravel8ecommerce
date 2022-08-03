@@ -23,6 +23,14 @@ class BrandController extends Controller
         $data=DB::table('brands')->get();
         return DataTables::of($data)
               ->addIndexColumn()
+              ->editColumn('front_page',function($row){
+                if($row->front_page==1){
+                  return '<a href=""> <span class="badge badge-success">Home page</span></a>';
+                }
+                else {
+                  return '<a href=""> <span class="badge badge-danger">Not home page</span></a>';
+                }
+              })
               ->addColumn('action',function($row){
                 $actionbtn=
                 '
@@ -35,7 +43,7 @@ class BrandController extends Controller
                 ';
                 return $actionbtn;
               })
-              ->rawColumns(['action'])
+              ->rawColumns(['action','front_page'])
               ->make(true);
     }
 
@@ -53,6 +61,7 @@ class BrandController extends Controller
     $slug=Str::slug($request->brand_name, '-');
     $data=array();
     $data['brand_name']=$request->brand_name;
+    $data['front_page']=$request->front_page;
     $data['brand_slug']=Str::slug($request->brand_name, '-');
     //image Insert
     $photo=$request->brand_logo;
@@ -84,6 +93,7 @@ class BrandController extends Controller
   public function update(Request $request){
     $data=array();
     $data['brand_name']=$request->brand_name;
+    $data['front_page']=$request->front_page;
     $data['brand_slug']=Str::slug($request->brand_name, '-');
 
     if($request->brand_logo){

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Review;
+use App\Models\WebsiteReview;
 use Auth;
 use DB;
 class ReviewController extends Controller
@@ -39,20 +40,33 @@ if($check_review){
 
   }
 
-  public function addwishlist($id)
+  //write review of Website
+
+  public function WriteReviewWebsite()
   {
-    $check_wishlist=DB::table('wishlists')->where('product_id',$id)->where('user_id',Auth::id())->first();
-    if($check_wishlist){
-      $notification= array('messege' =>'You have already added  this product on your wishlist!' , 'alert-type'=>'error');
+    return view('user.review_write');
+  }
+  //Store website review
+  public function storeReviewWebsite(Request $request)
+  {
+    $check=DB::table('website_reviews')->where('user_id',Auth::id())->first();
+    if($check){
+      $notification= array('messege' =>'Review Already Exits!' , 'alert-type'=>'error');
       return back()->with($notification);
     }
-    else {
-      $data=array();
-      $data['user_id']=Auth::id();
-      $data['product_id']=$id;
-      DB::table('wishlists')->insert($data);
-      $notification= array('messege' =>'You have  added this product on wishlist!' , 'alert-type'=>'success');
+    else{
+      WebsiteReview::insert([
+        'user_id'=>Auth::id(),
+        'name'=>$request->name,
+        'review'=>$request->review,
+        'rating'=>$request->rating,
+        'review_date'=>date('d,F Y'),
+        'status'=>0,
+      ]);
+      $notification= array('messege' =>'Thank you For given on our Website!' , 'alert-type'=>'success');
       return back()->with($notification);
     }
   }
+
+
 }

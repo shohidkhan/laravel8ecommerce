@@ -19,20 +19,20 @@ $category=DB::table('categories')->orderBy('category_name','asc')->get();
 								<ul class="cat_menu">
 									@foreach($category as $row)
 									<li class="hassubs">
-										<a href="#">{{$row->category_name}}<i class="fas fa-chevron-right"></i></a>
+										<a href="{{route('categorywise.product',$row->id)}}">{{$row->category_name}}<i class="fas fa-chevron-right"></i></a>
 										@php
 										$subcategory=DB::table('subcategories')->where('category_id',$row->id)->get();
 										@endphp
 										<ul>
 											@foreach($subcategory as $row)
 											<li class="hassubs">
-												<a href="#">{{$row->subcategory_name}}<i class="fas fa-chevron-right"></i></a>
+												<a href="{{route('subcategorywise.product',$row->id)}}">{{$row->subcategory_name}}<i class="fas fa-chevron-right"></i></a>
 												@php
 												$childcategory=DB::table('childcategories')->where('subcategory_id',$row->id)->get();
 												@endphp
 												<ul>
 													@foreach($childcategory as $row)
-													<li><a href="#">{{$row->childcategory_name}}<i class="fas fa-chevron-right"></i></a></li>
+													<li><a href="{{route('childcategorywise.product',$row->id)}}">{{$row->childcategory_name}}<i class="fas fa-chevron-right"></i></a></li>
 													@endforeach
 												</ul>
 											</li>

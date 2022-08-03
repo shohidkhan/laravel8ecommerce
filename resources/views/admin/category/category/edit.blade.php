@@ -36,7 +36,13 @@
               {{$message}}
               @enderror
             </div>
-
+            <div class="form-group">
+              <label for="">Show on Home Page</label>
+              <select class="form-control" name="home_page">
+                <option value="1" @if($data->home_page==1) selected @endif>Yes</option>
+                <option value="0"  @if($data->home_page==0) selected @endif>No</option>
+              </select>
+            </div>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-info">Update</button>

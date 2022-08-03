@@ -116,5 +116,20 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'is_admin'
       Route::get('delete/{id}','PageController@destory')->name('page.delete');
        Route::post('update/{id}',"PageController@update")->name('page.update');
     });
+    //page setting Route
+    Route::group(['prefix'=>'ticket'],function(){
+      Route::get('/','TicketController@index')->name('ticket.index');
+      Route::get('/ticket/show/{id}','TicketController@ticketshow')->name('admin.ticket.show');
+      Route::post('/admin/reply','TicketController@reply')->name('admin.reply');
+      Route::get('/close/ticket/{id}','TicketController@closeticket')->name('admin.close.ticket');
+      Route::get('/ticket/delete/{id}','TicketController@destory')->name('admin.ticket.delete');
+      //  Route::post('update/{id}',"PageController@update")->name('page.update');
+    });
+    //Payment_getway
+    Route::group(['prefix'=>'Payment_getway'],function(){
+      Route::get('/payment/getway','Payment_getwayController@payment_getway')->name('payment.getway');
+      Route::post('/update/aamarpay','Payment_getwayController@updateaamrpay')->name('update.aamarpay');
+      Route::post('/update/surjopay','Payment_getwayController@updatsurjopay')->name('update.surjopay');
+    });
   });
 });
