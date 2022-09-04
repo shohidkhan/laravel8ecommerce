@@ -57,7 +57,7 @@ class OrderController extends Controller
         $order['year']=date('Y');
         $order_id=DB::table('orders')->insertGetId($order);
 
-        Mail::to($request->c_email)->send(new InvoiceMail($order));
+Mail::to($request->c_email)->send(new InvoiceMail($order));
 
         //order details
         $content=Cart::content();
@@ -72,7 +72,9 @@ class OrderController extends Controller
           $details['single_price']=$row->price;
           $details['subtotal']=$row->price*$row->qty;
           DB::table('order_details')->insert($details);
+
         }
+
         Cart::destroy();
         if(Session::has('coupon')){
           Session::forget('coupon');

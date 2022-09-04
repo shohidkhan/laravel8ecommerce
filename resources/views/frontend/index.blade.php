@@ -33,6 +33,22 @@
   </div>
 </div>
 
+<!-- Campaign -->
+@isset($campaign)
+    <div class="characteristics">
+       <div class="container">
+           <div class="row">
+               <div class="col-lg-2"></div>
+               <div class="col-lg-8">
+                   <strong style="text-align: center;">{{ $campaign->title }}</strong>
+                   <a href=""> <img src="{{ asset('files/campaign/') }}/{{$campaign->image}}" style="width:100%;"> </a>
+               </div><br>
+
+           </div>
+       </div>
+   </div>
+   @endisset
+
 
 <!-- Characteristics -->
 

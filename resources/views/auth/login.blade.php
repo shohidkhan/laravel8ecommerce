@@ -79,7 +79,7 @@
                     <br>
                     <br>
                     <div class="form-group text-center">
-                      <a href="" class="btn btn-danger btn-sm  text-white">Login WIth Google</a>
+                      <a href="{{route('social.oauth','google')}}" class="btn btn-danger btn-sm  text-white">Login WIth Google</a>
                      </div>
 
                 </div>

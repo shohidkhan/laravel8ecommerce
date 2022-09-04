@@ -59,6 +59,14 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'is_admin'
      Route::get('/edit/{id}','CouponController@edit')->name('coupon.edit');
      Route::post('/update/{id}','CouponController@update')->name('coupon.update');
   });
+  //coupn route
+  Route::group(['prefix'=>'order'],function(){
+    Route::get('/','OrderController@index')->name('order.index');
+    Route::get('/view/{id}',"OrderController@orderview")->name('order.view');
+     Route::get('/delete/{id}','OrderController@destory')->name('order.delete');
+     Route::get('/edit/{id}','OrderController@edit')->name('order.edit');
+     Route::post('/update/{id}','OrderController@updatestatus')->name('update.status');
+  });
   //warehouse route
   Route::group(['prefix'=>'warehouse'],function(){
     Route::get('/','WarehouseController@index')->name('warehouse.index');

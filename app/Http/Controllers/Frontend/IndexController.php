@@ -24,8 +24,9 @@ class IndexController extends Controller
       $random_products=Product::where('status',1)->inRandomOrder()->limit(6)->get();
       $todayDeal=Product::where('status',1)->where('today_deal',1)->orderBy('id','desc')->limit(6)->get();
       $review=DB::table('website_reviews')->where('status',1)->orderBy('id','DESC')->limit(12)->get();
+      $campaign=DB::table('campaigns')->where('status',1)->orderBy('id','desc')->first();
 
-      return view('frontend.index',compact('category','popular_products','bannerProduct','featured_products','trendy_products','home_category','brand','random_products','todayDeal','review'));
+      return view('frontend.index',compact('category','popular_products','bannerProduct','featured_products','trendy_products','home_category','brand','random_products','todayDeal','review','campaign'));
     }
     public function productDetails($slug)
     {

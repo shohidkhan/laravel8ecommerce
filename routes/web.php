@@ -91,8 +91,11 @@ Route::group(['namespace'=>'App\Http\Controllers\Frontend',],function(){
 
 
   //__payment_getway
-
 Route::post('/success','OrderController@success')->name('success');
-
 Route::post('/fail','OrderController@fail')->name('fail');
+
 });
+
+//socialite
+Route::get('oauth/{driver}', [App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])->name('social.oauth');
+Route::get('oauth/{driver}/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback'])->name('social.callback');
