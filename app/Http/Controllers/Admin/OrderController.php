@@ -20,16 +20,6 @@ class OrderController extends Controller
     if($request->ajax()){
       $product="";
       $query=DB::table('orders')->orderBy('id','desc');
-      // if($request->payment_type){
-      //   $query->where('products.category_id',$request->category_id);
-      // }
-      // if($request->warehouse_id){
-      //   $query->where('products.warehouse_id',$request->warehouse_id);
-      // }
-      // if($request->brand_id)
-      // {
-      //   $query->where('products.brand_id',$request->brand_id);
-      // }
       if($request->date){
         $order_date=date('d-m-Y',strtotime($request->date));
         $query->where('orders.date',$order_date);

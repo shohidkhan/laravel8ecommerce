@@ -42,6 +42,9 @@ class CampaignContoller extends Controller
                       <a href="'.Route('campaign.delete',[$row->id]).'" id="delete" class="btn btn-danger btn-sm">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                       </a>
+                      <a href="'.Route('campaign.products',[$row->id]).'"  class="btn btn-success btn-sm">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </a>
                       ';
                       return $actionbtn;
                     })

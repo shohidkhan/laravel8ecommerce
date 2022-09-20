@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use  Auth;
 use App\Models\User;
 use Hash;
+use DB;
 
 class AdminController extends Controller
 {
@@ -15,7 +16,15 @@ class AdminController extends Controller
       $this->middleware('auth');
   }
   public function admin(){
-    return view('admin.home');
+
+    $coustomers=DB::table('users')->where('is_admin','0')->orWhere('is_admin',NULL)->orderBy('id','desc')->paginate(10);
+
+    $latest_order=DB::table('orders')->orderBy('id','DESC')->paginate(10);
+     $most_views=DB::table('products')->orderBy('product_views','DESC')->where('status',1)->limit(8)->get();
+     $total_product=DB::table('products')->count();
+     $active_product=DB::table('products')->where('status',1)->count();
+
+    return view('admin.home',compact('coustomers','latest_order','most_views','total_product','active_product'));
   }
   // Admin Custom Logout
   public function logout(){

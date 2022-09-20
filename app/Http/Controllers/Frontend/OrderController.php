@@ -72,7 +72,7 @@ Mail::to($request->c_email)->send(new InvoiceMail($order));
           $details['single_price']=$row->price;
           $details['subtotal']=$row->price*$row->qty;
           DB::table('order_details')->insert($details);
-
+          DB::table('products')->where('id',$row->id)->decrement('stock_quantity',$row->qty);
         }
 
         Cart::destroy();
@@ -211,6 +211,7 @@ Mail::to($request->c_email)->send(new InvoiceMail($order));
                 $details['single_price']=$row->price;
                 $details['subtotal']=$row->price*$row->qty;
                 DB::table('order_details')->insert($details);
+                DB::table('products')->where('id',$row->id)->decrement('stock_quantity',$row->qty);
             }
 
             Cart::destroy();

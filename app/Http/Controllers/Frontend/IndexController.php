@@ -35,11 +35,13 @@ class IndexController extends Controller
       Product::where('slug',$slug)->increment('product_views');
       $related_products=Product::where('subcategory_id',$single_product->subcategory_id)->orderBy('id','desc')->take(10)->get();
       $reviews=Review::where('product_id',$single_product->id)->orderBy('id','desc')->get();
+      // Share button 1
+
     return view('frontend.product_details',compact('single_product','related_products','reviews'));
     }
     public function productQuickView($id)
     {
-      echo $id;
+
       $product=Product::where('id',$id)->first();
 
       //return view('frontend.product_quick_view',compact('product'));
@@ -111,5 +113,32 @@ class IndexController extends Controller
         return back()->with($notification);
       }
 
+    }
+
+
+
+    public function campaigns_products($id)
+    {
+      $campaign_products=DB::table('campaign_products')
+      ->leftJoin('products','campaign_products.product_id','products.id')
+      ->select('campaign_products.*','products.thumbnail','products.name','products.code','products.selling_price','products.slug')
+      ->where('campaign_id',$id)
+      ->paginate(20);
+      return view('frontend.campaign_products',compact('campaign_products'));
+    }
+
+
+    public function campaign_product_details($slug)
+    {
+      $single_product=Product::where('slug',$slug)->first();
+      Product::where('slug',$slug)->increment('product_views');
+      $product_price=DB::table('campaign_products')->where('product_id',$single_product->id)->first();
+      $related_products=DB::table('campaign_products')
+      ->leftJoin('products','campaign_products.product_id','products.id')
+      ->select('campaign_products.*','products.*')
+      ->inRandomOrder(12)->get();
+      $reviews=Review::where('product_id',$single_product->id)->orderBy('id','desc')->get();
+
+      return view('frontend.campaign_details',compact('single_product','related_products','reviews','product_price'));
     }
 }

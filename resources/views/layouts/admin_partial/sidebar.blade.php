@@ -30,7 +30,7 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item ">
-          <a href="#" class="nav-link active">
+          <a href="{{ route('admin.home') }}" class="nav-link active">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -45,7 +45,7 @@
             </p>
           </a>
         </li>
-
+      @if(Auth::user()->category==1)
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-copy"></i>
@@ -87,6 +87,8 @@
             </li>
           </ul>
         </li>
+      @endif
+      @if (Auth::user()->offer==1)
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-copy"></i>
@@ -110,6 +112,78 @@
             </li>
           </ul>
         </li>
+      @endif
+      @if (Auth::user()->blog==1)
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              Blogs
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{route('blog.category')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Category</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('blog.index')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>BLog Post</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+      @endif
+      @if (Auth::user()->userrole==1)
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              User Role
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{route('user.role.create')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Create New Role</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('manage.role')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Manage Role</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+      @endif
+      @if (Auth::user()->contact==1)
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              Contact
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{route('admin.contact')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Contacts</p>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+      @endif
+      @if (Auth::user()->order==1)
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-copy"></i>
@@ -133,6 +207,34 @@
             </li>
           </ul>
         </li>
+      @endif
+      @if (Auth::user()->report==1)
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              Report
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{route('report.order.index')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p> Orders Report</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('customers.orders.report')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Customers  Orders Report</p>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+      @endif
+      @if (Auth::user()->pickuppoint==1)
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-copy"></i>
@@ -150,6 +252,8 @@
             </li>
           </ul>
         </li>
+      @endif
+      @if (Auth::user()->ticket==1)
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-copy"></i>
@@ -167,6 +271,8 @@
             </li>
           </ul>
         </li>
+      @endif
+      @if (Auth::user()->product==1)
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-copy"></i>
@@ -191,6 +297,8 @@
           </ul>
 
         </li>
+      @endif
+      @if (Auth::user()->setting==1)
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-copy"></i>
@@ -232,6 +340,7 @@
             </li>
           </ul>
         </li>
+      @endif
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-copy"></i>

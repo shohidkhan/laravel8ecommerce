@@ -37,11 +37,12 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-       <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
+       <form action="{{route('product.update',$data->id)}}" method="post" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="proudct_id" value="{{ $data->id }}">
        	<div class="row">
           <!-- left column -->
-          <div class="col-md-8">
+          <div class="col-lg-8">
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
@@ -76,7 +77,7 @@
                             @endphp
                             <option style="color:blue;" disabled="">{{ $row->category_name }}</option>
                                @foreach($subcategory as $row)
-                                 <option value="{{ $row->id }}"> -- {{ $row->subcategory_name }}</option>
+                                 <option value="{{ $row->id }}" @if($row->id==$data->subcategory_id) selected @endif> -- {{ $row->subcategory_name }}</option>
                                @endforeach
                          @endforeach
 
@@ -89,7 +90,9 @@
                     <div class="form-group col-lg-6">
                       <label for="exampleInputPassword1">Child category<span class="text-danger">*</span> </label>
                       <select class="form-control" name="childcategory_id" id="childcategory_id">
-
+                        @foreach ($childcategory as $row)
+                          <option value="{{ $row->id }}" @if($row->id==$data->childcategory_id) selected @endif>{{ $row->childcategory_name }}</option>
+                        @endforeach
                       </select>
                       @error('childcategory_id')
                       {{$message}}
@@ -165,7 +168,7 @@
                       <select class="form-control" name="warehouse_id">
                         <option value="" disabled selected>=== Choose Warehouse ===</option>
                         @foreach($warehouse as $row)
-                        <option value="{{$row->id}}">{{$row->warehouse_name}}</option>
+                        <option value="{{$row->id}}" @if($row->id == $data->warehouse_id) selected @endif>{{$row->warehouse_name}}</option>
                         @endforeach
                       </select>
                       @error('warehouse_id')
@@ -225,13 +228,14 @@
            </div>
             <!-- /.card -->
           <!-- right column -->
-          <div class="col-md-4">
+          <div class="col-lg-4">
             <!-- Form Element sizes -->
             <div class="card card-primary">
               <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Main Thumbnail <span class="text-danger">*</span> </label><br>
-                    <input type="file" name="thumbnail" required="" accept="image/*" class="dropify">
+                    <input type="file" name="thumbnail"  accept="image/*" class="dropify">
+                    <input type="hidden" name="old_thumbnail" value="{{ $data->thumbnail }}">
                     @error('thumbnail')
                     {{$message}}
                     @enderror
@@ -245,6 +249,21 @@
                           <td><input type="file" accept="image/*" name="images[]" class="form-control name_list" /></td>
                           <td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td>
                       </tr>
+                      @php
+                        $images=json_decode($data->images,true);
+                      @endphp
+                      @if(!$images)
+                      @else
+                        <div class="row">
+                          @foreach ($images as $key => $img)
+                            <div class="col-md-4">
+                              <img src="{{ asset('files/product/') }}/{{ $img }}" style="width:100px;height:80px; padding:10px;" alt="">
+                              <input type="hidden" name="old_images[]" value="{{ $img }}">
+                              <button type="button" class="remove-files">X</button>
+                            </div>
+                          @endforeach
+                        </div>
+                      @endif
 
                     </table>
                     @error('images')
@@ -344,6 +363,10 @@ $("#subcategory_id").change(function(){
             var button_id = $(this).attr("id");
             $('#row'+button_id+'').remove();
        });
+     });
+
+     $('.remove-files').on('click',function(){
+       $(this).parents('.col-md-4').remove();
      });
 
 </script>

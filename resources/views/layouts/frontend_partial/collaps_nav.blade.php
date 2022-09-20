@@ -49,6 +49,7 @@ $category=DB::table('categories')->orderBy('category_name','asc')->get();
 								<ul class="standard_dropdown main_nav_dropdown">
 									<li><a href="{{url('/')}}">Home<i class="fas fa-chevron-down"></i></a></li>
 		              <li><a href="#">Campaign<i class="fas fa-chevron-down"></i></a></li>
+		              <li><a href="#">Blog<i class="fas fa-chevron-down"></i></a></li>
 		              <li><a href="#">Contact<i class="fas fa-chevron-down"></i></a></li>
 		              <li><a href="#">Helpline<i class="fas fa-chevron-down"></i></a></li>
 								</ul>

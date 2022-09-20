@@ -32,6 +32,8 @@ Route::get('logout', [App\Http\Controllers\HomeController::class, 'logout'])->na
 Route::group(['namespace'=>'App\Http\Controllers\Frontend',],function(){
   Route::get('/','IndexController@index');
   Route::get('/product_details/{slug}','IndexController@productDetails')->name('product.details');
+  Route::get('/campaign_details/{slug}','IndexController@campaign_product_details')->name('campaign.product.details');
+  Route::get('/campaign/product/{id}','IndexController@campaigns_products')->name('frontend.campaign.products');
   Route::get('/product-quick-view/{id}','IndexController@productQuickView');
   //Store Review
   Route::post('review-store','ReviewController@store')->name('review.store');
@@ -87,12 +89,17 @@ Route::group(['namespace'=>'App\Http\Controllers\Frontend',],function(){
   Route::get('/new/ticket','TicketController@newticket')->name('new.ticket');
   Route::post('/store/ticket','TicketController@storeticket')->name('store.ticket');
   Route::get('/show/ticket/{id}','TicketController@showticket')->name('show.ticket');
-  Route::post('/reply/ticket','TicketController@reply')->name('reply.ticket');\
+  Route::post('/reply/ticket','TicketController@reply')->name('reply.ticket');
+  Route::get('/contact','ContactController@contact');
+  Route::post('/contact/post','ContactController@contactpost')->name('contact.post');
 
 
   //__payment_getway
 Route::post('/success','OrderController@success')->name('success');
 Route::post('/fail','OrderController@fail')->name('fail');
+//BLog
+Route::get('/blogs','BlogController@blogs');
+Route::get('/blogs/details/{slug}','BlogController@blog_details')->name('blog.details');
 
 });
 

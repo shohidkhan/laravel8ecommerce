@@ -11,7 +11,7 @@
                     {{ __('Dashboard') }}
                     <a href="{{route('write.review')}}" style="float:right;"><i class="fas fa-pencil-alt"></i> Write a review</a>
                 </div>
-
+                
                 <div class="card-body">
                    <div class="row">
                        <div class="col-lg-3">

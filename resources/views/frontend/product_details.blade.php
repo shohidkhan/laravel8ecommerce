@@ -2,7 +2,7 @@
 @section('content')
 <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/styles/product_styles.css">
 <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/styles/product_responsive.css">
-
+<script src="{{ asset('js/share.js') }}"></script>
 @include('layouts.frontend_partial.collaps_nav')
 
 	<!-- Single Product -->
@@ -15,6 +15,7 @@
 $images=json_decode($single_product->images);
 $color=explode(',',$single_product->color);
 $size=explode(',',$single_product->size);
+
 @endphp
 
 
@@ -30,6 +31,12 @@ $sum_rating=App\Models\Review::where('product_id',$single_product->id)->sum('rat
 $count_rating=App\Models\Review::where('product_id',$single_product->id)->count('rating');
 
 
+$shareButtons1 = \Share::page(
+      url()->current()
+)
+->facebook()
+->twitter()
+->linkedin()
 
 @endphp
 			<!-- Images -->
@@ -52,6 +59,7 @@ $count_rating=App\Models\Review::where('product_id',$single_product->id)->count(
 
 			<!-- Description -->
 			<div class="col-lg-4 order-3">
+
 				<div class="product_description">
 					<div class="product_category">{{$single_product->connect_to_category->category_name}} > {{$single_product->connect_to_subcategory->subcategory_name}} > {{$single_product->connect_to_childcategory->childcategory_name}}</div>
 					<div class="product_name" style="font-size: 20px;">{{$single_product->name}}</div>
@@ -193,6 +201,7 @@ $count_rating=App\Models\Review::where('product_id',$single_product->id)->count(
 				</div>
 			</div>
 			<div class="col-lg-3 order-3" style="border-left: 1px solid grey; padding-left: 10px;">
+        {!! $shareButtons1 !!}
 				<strong class="text-muted">Pickup Point of this product</strong><br>
 				<i class="fa fa-map"> {{$single_product->connect_to_Pickuppoint->pickup_point_name}} </i><hr><br>
 				<strong class="text-muted"> Home Delivery :</strong><br>

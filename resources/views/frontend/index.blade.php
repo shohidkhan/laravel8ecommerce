@@ -35,18 +35,26 @@
 
 <!-- Campaign -->
 @isset($campaign)
+  @php
+    $today=strtotime(date('Y-m-d'));
+    $end_date=strtotime($campaign->end_date);
+  @endphp
+  @if ($today <= $end_date)
+
+
     <div class="characteristics">
        <div class="container">
            <div class="row">
                <div class="col-lg-2"></div>
                <div class="col-lg-8">
                    <strong style="text-align: center;">{{ $campaign->title }}</strong>
-                   <a href=""> <img src="{{ asset('files/campaign/') }}/{{$campaign->image}}" style="width:100%;"> </a>
+                   <a href="{{ route('frontend.campaign.products',$campaign->id) }}"> <img src="{{ asset('files/campaign/') }}/{{$campaign->image}}" style="width:100%;"> </a>
                </div><br>
 
            </div>
        </div>
    </div>
+     @endif
    @endisset
 
 
@@ -694,18 +702,5 @@ $cat_products=App\Models\Product::where('category_id',$row->id)->orderBy('id','d
 
 
 
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).on('click', '.quick_view', function(){
-   var id = $(this).attr("id");
-   $.ajax({
-        url: "{{ url("/product-quick-view/") }}/"+id,
-        type: 'get',
-        success: function(data) {
-             // $("#quick_view_body").html(data);
-        }
-     });
-  });
 
-</script> -->
 @endsection

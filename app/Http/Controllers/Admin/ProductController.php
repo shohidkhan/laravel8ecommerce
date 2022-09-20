@@ -57,15 +57,6 @@ class ProductController extends Controller
       ->get();
       return DataTables::of($product)
              ->addIndexColumn()
-             // ->editColumn('category_name',function($row){
-             //   return $row->connect_to_category->category_name;
-             // })
-             // ->editColumn('subcategory_name',function($row){
-             //   return $row->connect_to_subcategory->subcategory_name;
-             // })
-             // ->editColumn('brand_name',function($row){
-             //   return $row->connect_to_brand->brand_name;
-             // })
              ->editColumn('featured',function($row){
                if($row->featured==1){
                  return '<a href="" data-id="'.$row->id.'" class="deactive_featured"><i class="fas fa-thumbs-down text-danger"></i> <span class="badge badge-success">active</span></a>';
@@ -196,6 +187,103 @@ class ProductController extends Controller
 
   }
 
+public function update(Request $request)
+{
+  $validated = $request->validate([
+     'name' => 'required',
+     'code' => 'required|max:55',
+     'subcategory_id' => 'required',
+     'childcategory_id' => 'required',
+     'pickup_point_id' => 'required',
+     'brand_id' => 'required',
+     'unit' => 'required',
+     'tags' => 'required',
+     'purchase_price' => 'required',
+     'selling_price' => 'required',
+     'discount_price' => 'required',
+     'warehouse_id' => 'required',
+     'stock_quantity' => 'required',
+     'video' => 'required',
+     'description' => 'required',
+     'featured' => 'required',
+     'today_deal' => 'required',
+     'status' => 'required',
+ ]);
+
+ //subcategory call for category id
+     $subcategory=DB::table('subcategories')->where('id',$request->subcategory_id)->first();
+     $slug=Str::slug($request->name, '-');
+
+
+     $data=array();
+     $data['name']=$request->name;
+     $data['slug']=Str::slug($request->name, '-');
+     $data['code']=$request->code;
+     $data['category_id']=$subcategory->category_id;
+     $data['subcategory_id']=$request->subcategory_id;
+     $data['childcategory_id']=$request->childcategory_id;
+     $data['brand_id']=$request->brand_id;
+     $data['pickup_point_id']=$request->pickup_point_id;
+     $data['unit']=$request->unit;
+     $data['tags']=$request->tags;
+     $data['purchase_price']=$request->purchase_price;
+     $data['selling_price']=$request->selling_price;
+     $data['discount_price']=$request->discount_price;
+     $data['warehouse_id']=$request->warehouse_id;
+     $data['stock_quantity']=$request->stock_quantity;
+     $data['color']=$request->color;
+     $data['size']=$request->size;
+     $data['description']=$request->description;
+     $data['video']=$request->video;
+     $data['featured']=$request->featured;
+     $data['today_deal']=$request->today_deal;
+     $data['product_slider']=$request->product_slider;
+     $data['status']=$request->status;
+     $data['trendy']=$request->trendy;
+
+
+
+     //Check old image are exi or not if exist then delete and insert new image
+
+     if($request->thumbnail){
+       $old_thumbnail=base_path('public/files/product/'.$request->old_thumbnail);
+       if (File::exists($old_thumbnail)) {
+         File::delete($old_thumbnail);
+       }
+      $thumbnail=$request->thumbnail;
+      $thumbnail_name= $slug.'.'.$thumbnail->getClientOriginalExtension();
+       $thumbnail_location=base_path('public/files/product/');
+       Image::make($thumbnail)->resize(600,600)->save($thumbnail_location.$thumbnail_name);
+       $data['thumbnail']=$thumbnail_name;
+     }
+
+    //multiple images update
+
+
+     //multiple images
+     $old_images=$request->has('old_images');
+
+     if ($old_images) {
+       $images=$request->old_images;
+       $data['images']=json_encode($images);
+     }
+     else {
+       $images=array();
+       $data['images']=json_encode($images);
+     }
+     if($request->hasFile($images)){
+       foreach ($request->file('images') as $key => $image) {
+         $image_name=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+         $image_location=base_path('public/files/product/');
+         Image::make($image)->resize(600,600)->save($image_location.$image_name);
+           array_push($images, $image_name);
+       }
+       $data['images'] = json_encode($images);
+     }
+     DB::table('products')->where('id',$request->proudct_id)->update($data);
+     $notification=array('messege' => 'Product Updated!', 'alert-type' => 'success');
+     return redirect()->back()->with($notification);
+}
   //deactive_featured
   public function deactive_featured($id)
   {
@@ -239,6 +327,16 @@ class ProductController extends Controller
     if(File::exists($Image_location)){
       unlink($Image_location);
     }
+    $images=json_decode($data->images,true);
+
+    if(isset($images)){
+      foreach ($images as $key => $image) {
+        $multiple_img_location=base_path('public/files/product/').$image;
+        if(File::exists($multiple_img_location)){
+          File::delete($multiple_img_location);
+        }
+      }
+    }
     DB::table('products')->where('id',$id)->delete();
     $notification=array('messege'=>'Product Deleted!','alert-type'=>'success');
 
@@ -248,10 +346,11 @@ class ProductController extends Controller
   public function edit($id)
   {
     $data=DB::table('products')->where('id',$id)->first();
-  $category=DB::table('categories')->get();
-  $brand=DB::table('brands')->get();
-  $pickuppoint=DB::table('pickuppoints')->get();
-  $warehouse =DB::table('warehouses')->get();
-    return view('admin.product.edit',compact('category','data','brand','pickuppoint','warehouse'));
+    $category=DB::table('categories')->get();
+    $brand=DB::table('brands')->get();
+    $pickuppoint=DB::table('pickuppoints')->get();
+    $warehouse =DB::table('warehouses')->get();
+    $childcategory=DB::table('childcategories')->where('category_id',$data->category_id)->get();
+    return view('admin.product.edit',compact('category','data','brand','pickuppoint','warehouse','childcategory'));
   }
 }

@@ -51,6 +51,14 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'is_admin'
      Route::get('/edit/{id}','CampaignContoller@edit')->name('campaign.edit');
      Route::post('/update','CampaignContoller@update')->name('campaign.update');
   });
+  //Campaign route
+  Route::group(['prefix'=>'campaign.products'],function(){
+    Route::get('/{campaign_id}','CampaignProductController@campaignProducts')->name('campaign.products');
+    Route::get('/add/{id}/{campaign_id}',"CampaignProductController@campaignproductadd")->name('add.product.to.campaign');
+     Route::get('/product/list/{campaign_id}','CampaignProductController@campaignproductlist')->name('campaign.products.list');
+  Route::get('/delete/{id}','CampaignProductController@delete')->name('campaign.product.delete');
+    //  Route::post('/update','CampaignContoller@update')->name('campaign.update');
+  });
   //coupn route
   Route::group(['prefix'=>'coupon'],function(){
     Route::get('/','CouponController@index')->name('coupon.index');
@@ -83,11 +91,58 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'is_admin'
     Route::get('/edit/{id}','PickuppointController@edit')->name('pickuppoint.edit');
     Route::post('/update/{id}','PickuppointController@update')->name('pickuppoint.update');
   });
+  //pickup point route
+  Route::group(['prefix'=>'role'],function(){
+    Route::get('/','RoleController@index')->name('manage.role');
+    Route::get('/create','RoleController@create')->name('user.role.create');
+    Route::post('/store/role',"RoleController@store")->name('store.role');
+     Route::get('/edit/{id}','RoleController@edit')->name('role.edit');
+     Route::get('/delete/{id}','RoleController@destroy')->name('role.delete');
+    Route::post('/update/{id}','RoleController@update')->name('update.role');
+  });
+  //blog category point route
+  Route::group(['prefix'=>'blog-category'],function(){
+    Route::get('/','BlogCategoryController@index')->name('blog.category');
+   Route::post('/store',"BlogCategoryController@store")->name('blog.category.store');
+     Route::get('/delete/{id}','BlogCategoryController@destory')->name('blog.category.delete');
+    Route::get('/edit/{id}','BlogCategoryController@edit')->name('blog.category.edit');
+     Route::post('/update/{id}','BlogCategoryController@update')->name('blog.category.update');
+  });
+
+  //blog point route
+  Route::group(['prefix'=>'blog'],function(){
+    Route::get('/','BlogController@index')->name('blog.index');
+    Route::post('/store',"BlogController@store")->name('blog.store');
+    Route::get('/deactive_status/{id}',"BlogController@deactive_status")->name('blog.deactive_status');
+    Route::get('/active_status/{id}',"BlogController@active_status")->name('blog.active_status');
+    Route::get('/delete/{id}','BlogController@destory')->name('blog.delete');
+    Route::get('/edit/{id}','BlogController@edit')->name('blog.edit');
+     Route::post('/update/{id}','BlogController@update')->name('blog.update');
+  });
+  //blog point route
+  Route::group(['prefix'=>'contacts'],function(){
+    Route::get('/','ContactController@index')->name('admin.contact');
+
+     Route::get('/contact/view/{id}',"ContactController@contact_view")->name('contact.view');
+     Route::get('/send/mail/{email}',"ContactController@contact_send_mail")->name('contact.send.mail');
+  });
+  //report point route
+  Route::group(['prefix'=>'report'],function(){
+    Route::get('/order','ReportController@orderIndex')->name('report.order.index');
+    Route::get('/order/print','ReportController@reportOderPrint')->name('report.order.print');
+    Route::get('/customers/orders/report','ReportController@customersOrdersReport')->name('customers.orders.report');
+    Route::get('/customers/single/order/{id}','ReportController@customersingleorder')->name('customer.single.order');
+    Route::get('/customers/single/order/print','ReportController@customersingleorderPrint')->name('single.report.order.print');
+     // Route::get('/contact/view/{id}',"ContactController@contact_view")->name('contact.view');
+     // Route::get('/send/mail/{email}',"ContactController@contact_send_mail")->name('contact.send.mail');
+  });
+
   //product route
   Route::group(['prefix'=>'product'],function(){
     Route::get('/','ProductController@index')->name('product.index');
     Route::get('/create','ProductController@create')->name('product.create');
     Route::post('/store',"ProductController@store")->name('product.store');
+    Route::post('/product/update',"ProductController@update")->name('product.update');
     Route::get('/deactive_featured/{id}',"ProductController@deactive_featured")->name('product.deactive_featured');
     Route::get('/active_featured/{id}',"ProductController@active_featured")->name('product.deactive_featured');
     Route::get('/deactive_today_deal/{id}',"ProductController@deactive_today_deal")->name('product.deactive_today_deal');
